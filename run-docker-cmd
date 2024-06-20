@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Script to run CMD lines from a Dockerfile on macOS
+
+# Check if Dockerfile is provided
+if [ -z "$1" ]; then
+  echo "Please provide the path to the Dockerfile."
+  exit 1
+fi
+
+DOCKERFILE=$1
+
+# Extract CMD lines from the Dockerfile
+CMD_LINES=$(grep -i "^CMD" "$DOCKERFILE")
+
+if [ -z "$CMD_LINES" ]; then
+  echo "No CMD lines found in the Dockerfile."
+  exit 1
+fi
+
+# Execute each CMD line
+while IFS= read -r line; do
+  # Remove CMD and any surrounding brackets and quotes
+  CMD_JSON=$(echo "$line" | sed -e 's/^CMD\s*//I')
+  
+  # Use jq to parse and join the JSON array into a single command string
+  CMD=$(echo "$CMD_JSON" | jq -r '. | join(" ")')
+
+  echo "Executing: $CMD"
+  eval "$CMD"
+done <<< "$CMD_LINES"
+
+echo "All CMD lines executed."

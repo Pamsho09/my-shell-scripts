@@ -1,0 +1,2 @@
+#!/bin/bash
+osascript ~/Documents/close_all_apps.scpt

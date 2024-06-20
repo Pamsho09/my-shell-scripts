@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Script to initialize or deactivate a Python virtual environment using venv
+
+# Check if the --off flag is provided
+if [ "$1" == "--off" ]; then
+  if [ -z "$VIRTUAL_ENV" ]; then
+    echo "No virtual environment is currently activated."
+  else
+    deactivate
+    echo "Virtual environment deactivated."
+  fi
+  exit 0
+fi
+
+# Set default directory name to 'env' if no name is provided
+DIR_NAME=${1:-env}
+
+# Create the virtual environment
+python -m venv $DIR_NAME
+
+# Activate the virtual environment
+source $DIR_NAME/bin/activate
+
+echo "Virtual environment '$DIR_NAME' initialized and activated."

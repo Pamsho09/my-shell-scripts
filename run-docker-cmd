@@ -22,7 +22,6 @@ fi
 while IFS= read -r line; do
   # Remove CMD and any surrounding brackets and quotes
   CMD_JSON=$(echo "$line" | sed -e 's/^CMD\s*//I')
-  
   # Use jq to parse and join the JSON array into a single command string
   CMD=$(echo "$CMD_JSON" | jq -r '. | join(" ")')
 

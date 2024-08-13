@@ -1,2 +1,2 @@
 #!/bin/bash
-osascript ~/close_all_apps.scpt
+osascript /Users/franciscodanieljiemenezfernandez/my-shell-scripts/close_all_apps.scpt
